@@ -7,7 +7,7 @@ from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
 
 version = 0.1
-initial_opacity = 0.5 # ウィンドウ透明度の初期値
+initial_opacity = 0.5  # ウィンドウ透明度の初期値
 
 
 class DrawGrid(QWidget):
