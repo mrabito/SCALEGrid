@@ -2,59 +2,61 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5.QtWidgets import QWidget, QApplication
-from PyQt5.QtGui import QPainter, QColor, QPen
+from PyQt5.QtWidgets import QWidget, QSlider, QApplication
+from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
 
 version = 0.1
 
-class drawGrid(QWidget):
+
+class DrawGrid(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.init_ui()
 
-
-    def initUI(self):
+    def init_ui(self):
         self.setGeometry(300, 300, 300, 300)
         self.setWindowOpacity(0.5)
         self.setWindowTitle('SCALEGrid ver.' + str(version))
+        self.ctrl_grids()
         self.show()
 
     def paintEvent(self, e):
         qp = QPainter()
         qp.begin(self)
-        self.drawLines(qp)
+        self.draw_lines(qp)
         qp.end()
 
-    def drawLines(self, qp):
+    def ctrl_grids(self):
+        sld = QSlider(Qt.Horizontal, self)
+        sld.setGeometry(30, 40, 100, 30)
+
+    # paintEvent で呼ばれる
+    def draw_lines(self, qp):
         # 画面サイズを取得
         size = self.size()
         x = size.width()
-        y = size.height()
+        # y = size.height()
 
         # ラインを定義
-        lineSolid = QPen(Qt.black, 1, Qt.SolidLine)
-        lineDot = QPen(Qt.black, 1, Qt.DotLine)
+        line_solid = QPen(Qt.black, 1, Qt.SolidLine)
+        line_dot = QPen(Qt.black, 1, Qt.DotLine)
 
         # 描画
         for i in range(17):
-            posX = x / 16 * i
-            if i%4 == 0 :
-                qp.setPen(lineSolid)
+            pos_x = x / 16 * i
+            if i % 4 == 0:
+                qp.setPen(line_solid)
             else:
-                qp.setPen(lineDot)
+                qp.setPen(line_dot)
             # 縦線
-            qp.drawLine(posX, 0, posX, x)
+            qp.drawLine(pos_x, 0, pos_x, x)
             # 横線
-            qp.drawLine(0, posX, x, posX)
-
-class control(QMainWindow):
-
-    def main(self):
+            qp.drawLine(0, pos_x, x, pos_x)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = drawGrid()
+    dg = DrawGrid()
     sys.exit(app.exec_())
