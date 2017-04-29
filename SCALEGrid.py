@@ -7,6 +7,7 @@ from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt
 
 version = 0.1
+initial_opacity = 0.5 # ウィンドウ透明度の初期値
 
 
 class DrawGrid(QWidget):
@@ -17,7 +18,7 @@ class DrawGrid(QWidget):
 
     def init_ui(self):
         self.setGeometry(300, 300, 300, 300)
-        self.setWindowOpacity(0.5)
+        self.setWindowOpacity(initial_opacity)
         self.setWindowTitle('SCALEGrid ver.' + str(version))
         self.ctrl_grids()
         self.show()
@@ -28,10 +29,12 @@ class DrawGrid(QWidget):
         self.draw_lines(qp)
         qp.end()
 
+    # スライダーなど
     def ctrl_grids(self):
         sld = QSlider(Qt.Horizontal, self)
         sld.setGeometry(5, 5, 25, 20)
-        sld.setRange(5,100)
+        sld.setRange(5, 100)
+        sld.setValue(int(initial_opacity * 100))
         sld.valueChanged[int].connect(self.change_opacity)
 
     def change_opacity(self, value):
