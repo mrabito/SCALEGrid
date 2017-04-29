@@ -30,14 +30,18 @@ class DrawGrid(QWidget):
 
     def ctrl_grids(self):
         sld = QSlider(Qt.Horizontal, self)
-        sld.setGeometry(30, 40, 100, 30)
+        sld.setGeometry(5, 5, 25, 20)
+        sld.setRange(5,100)
+        sld.valueChanged[int].connect(self.change_opacity)
+
+    def change_opacity(self, value):
+        self.setWindowOpacity(value/100)
 
     # paintEvent で呼ばれる
     def draw_lines(self, qp):
         # 画面サイズを取得
         size = self.size()
         x = size.width()
-        # y = size.height()
 
         # ラインを定義
         line_solid = QPen(Qt.black, 1, Qt.SolidLine)
